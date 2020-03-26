@@ -40,7 +40,7 @@ double has_converged( double max_error ) {
     while(found){
         t=t+100;
         std::cout<<t<<std::endl;
-        for(int k=0;k<15;k++){
+        for(int k=1;k<16;k++){
             if(abs(u(t)[k]-(ua(t0)+(s*k))) <= max_error){
                 count++;
             }
@@ -51,23 +51,23 @@ double has_converged( double max_error ) {
         count=0;
     }
     
-//    double t1=t0;
-//    double t2=t;
-//
-//    while(abs(t2-t1)<10e-6){
-//        t=(t2-t1)/2;
-//        for(int k=0;k<15;k++){
-//            if(abs(u(t)[k]-(ua(t0)+(s*k))) <= max_error){
-//                count++;
-//            }
-//        }
-//        if(count==15){
-//            t2=t;
-//        }else{
-//            t1=t;
-//        }
-//        count=0;
-//    }
+    double t1=t0;
+    double t2=t;
+
+    while(abs(t2-t1)>10e-6){
+        t=(t2-t1)/2;
+        for(int k=0;k<15;k++){
+            if(abs(u(t)[k]-(ua(t0)+(s*k))) <= max_error){
+                count++;
+            }
+        }
+        if(count==15){
+            t2=t;
+        }else{
+            t1=t;
+        }
+        count=0;
+    }
     
     
     return t;
