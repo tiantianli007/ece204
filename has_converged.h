@@ -35,41 +35,42 @@ double has_converged( double max_error ) {
     double s=(ub(t0)-ua(t0))/16;
     double count=0;
     double t=0;
-    bool found = 1;
+    bool found = true;
     
     while(found){
         t=t+100;
+        std::cout<<t<<std::endl;
         for(int k=0;k<15;k++){
             if(abs(u(t)[k]-(ua(t0)+(s*k))) <= max_error){
                 count++;
             }
         }
         if(count==15){
-            found = 0;
+            found = false;
         }
         count=0;
     }
     
-    double t1=t0;
-    double t2=t;
+//    double t1=t0;
+//    double t2=t;
+//
+//    while(abs(t2-t1)<10e-6){
+//        t=(t2-t1)/2;
+//        for(int k=0;k<15;k++){
+//            if(abs(u(t)[k]-(ua(t0)+(s*k))) <= max_error){
+//                count++;
+//            }
+//        }
+//        if(count==15){
+//            t2=t;
+//        }else{
+//            t1=t;
+//        }
+//        count=0;
+//    }
     
-    while((t2-t1)<10e-6){
-        t=(t2-t1)/2;
-        for(int k=0;k<15;k++){
-            if(abs(u(t)[k]-(ua(t0)+(s*k))) <= max_error){
-                count++;
-            }
-        }
-        if(count==15){
-            t2=t;
-        }else{
-            t1=t;
-        }
-        count=0;
-    }
     
-    
-    return t2;
+    return t;
 }
 
 vec<15> f( double t, vec<15> w ){
@@ -91,9 +92,4 @@ vec<15> f( double t, vec<15> w ){
         kappa*(w[12]-2*w[13]+w[14])/pow(h,2),
         kappa*(w[13]-2*w[14]+ub(t))/pow(h,2),
     };
-}
-
-int main(){
-    std::cout<<has_converged(10e-6)<<std::endl;
-    return 0;
 }
